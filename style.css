@@ -71,6 +71,9 @@ button:hover {
     cursor: pointer;
     left: 0;
 }
+.bar:hover {
+    background-color: #6eff9f;
+}
 .bar:nth-child(2) {
     left: 50px;
 }
