@@ -1,0 +1,13 @@
+{
+  "name": "digit-finder",
+  "version": "1.0.0",
+  "description": "A simple digit recogniser web app using machine learning(neural networks)",
+  "main": "script.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "type": "module",
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
