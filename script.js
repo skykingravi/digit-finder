@@ -15,6 +15,7 @@ const init = () => {
 
     // Function to start drawing
     function startDrawing(e) {
+        e.preventDefault();
         isDrawing = true;
         context.beginPath();
         draw(e);
@@ -30,7 +31,7 @@ const init = () => {
     function draw(e) {
         if (!isDrawing) return;
 
-        var { x, y } = getMousePosition(e);
+        var { x, y } = getCursorPosition(e);
 
         // Set line properties
         context.lineCap = "round";
@@ -45,19 +46,28 @@ const init = () => {
         context.moveTo(x, y);
     }
 
-    // Function to get mouse position relative to the canvas
-    function getMousePosition(e) {
+    function getCursorPosition(e) {
         var rect = canvas.getBoundingClientRect();
-        var x = (e.clientX - rect.left) * (canvas.width / canvas.clientWidth);
-        var y = (e.clientY - rect.top) * (canvas.height / canvas.clientHeight);
+        var x = e.clientX - rect.left;
+        var y = e.clientY - rect.top;
         return { x, y };
     }
 
-    // Event listeners for mouse actions
-    canvas.addEventListener("mousedown", startDrawing);
-    canvas.addEventListener("mousemove", draw);
-    canvas.addEventListener("mouseup", stopDrawing);
-    canvas.addEventListener("mouseleave", stopDrawing);
+    // Check for touch support
+    var isTouchDevice = 'ontouchstart' in document.documentElement;
+
+    // Add event listeners accordingly
+    if (isTouchDevice) {
+        canvas.addEventListener('touchstart', startDrawing);
+        canvas.addEventListener('touchmove', draw);
+        canvas.addEventListener('touchend', stopDrawing);
+        canvas.addEventListener('touchcancel', stopDrawing);
+    } else {
+        canvas.addEventListener('mousedown', startDrawing);
+        canvas.addEventListener('mousemove', draw);
+        canvas.addEventListener('mouseup', stopDrawing);
+        canvas.addEventListener('mouseleave', stopDrawing);
+    }
 
     // Clear the canvas
     function clearCanvas() {
