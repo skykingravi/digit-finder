@@ -5,9 +5,13 @@ const init = () => {
 
     // Text & Buttons
     const clearCanvasBtn = document.getElementById("clearCanvasBtn");
-
+    
     // Get the canvas element and its context
     var canvas = document.getElementById("drawingCanvas");
+    if (window.innerWidth <= 600) {
+        canvas.width = 224;
+        canvas.height = 224;
+    }
     var context = canvas.getContext("2d", { willReadFrequently: true });
 
     // Variables to track drawing state
