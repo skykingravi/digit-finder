@@ -104,3 +104,9 @@ button:hover {
     bottom: -20px;
     color: #5EDB88;
 }
+
+@media screen and (max-width: 600px) {
+    canvas {
+        scale: 0.6;
+    }
+}
