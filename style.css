@@ -8,7 +8,7 @@
 body {
     width: 100vw;
     min-height: 100vh;
-    padding: 30px;
+    padding: 10px;
     display: grid;
     place-items: center;
     background-color: black;
@@ -63,16 +63,13 @@ button:hover {
     position: absolute;
     width: 35px;
     height: 205px;
-    transition: height .75s ease, background-color .2s ease;
+    transition: height .75s ease;
     background: #5EDB88;
     display: grid;
     place-items: center;
     bottom: 0;
     cursor: pointer;
     left: 0;
-}
-.bar:hover {
-    background-color: #6eff9f;
 }
 .bar:nth-child(2) {
     left: 50px;
@@ -106,13 +103,4 @@ button:hover {
     position: absolute;
     bottom: -20px;
     color: #5EDB88;
-}
-
-@media screen and (max-width: 600px) {
-    body {
-        overflow-x: hidden;
-    }
-    button, .bars {
-        scale: 0.6;
-    }
 }
