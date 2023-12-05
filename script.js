@@ -5,9 +5,9 @@ const init = () => {
     var WIDTH = 40;
     // Text & Buttons
     const clearCanvasBtn = document.getElementById("clearCanvasBtn");
-    
+
     // Get the canvas element and its context
-    var canvas = document.getElementById("drawingCanvas");
+    const canvas = document.getElementById("drawingCanvas");
     if (window.innerWidth <= 600) {
         canvas.width = 224;
         canvas.height = 224;
@@ -59,19 +59,19 @@ const init = () => {
     }
 
     // Check for touch support
-    var isTouchDevice = 'ontouchstart' in document.documentElement;
+    var isTouchDevice = "ontouchstart" in document.documentElement;
 
     // Add event listeners accordingly
     if (isTouchDevice) {
-        canvas.addEventListener('touchstart', startDrawing);
-        canvas.addEventListener('touchmove', draw);
-        canvas.addEventListener('touchend', stopDrawing);
-        canvas.addEventListener('touchcancel', stopDrawing);
+        canvas.addEventListener("touchstart", startDrawing);
+        canvas.addEventListener("touchmove", draw);
+        canvas.addEventListener("touchend", stopDrawing);
+        canvas.addEventListener("touchcancel", stopDrawing);
     } else {
-        canvas.addEventListener('mousedown', startDrawing);
-        canvas.addEventListener('mousemove', draw);
-        canvas.addEventListener('mouseup', stopDrawing);
-        canvas.addEventListener('mouseleave', stopDrawing);
+        canvas.addEventListener("mousedown", startDrawing);
+        canvas.addEventListener("mousemove", draw);
+        canvas.addEventListener("mouseup", stopDrawing);
+        canvas.addEventListener("mouseleave", stopDrawing);
     }
 
     // Clear the canvas
@@ -102,73 +102,62 @@ const init = () => {
         return softmaxArr;
     }
 
-    // Return max value with its index
-    function findMaxValueAndIndex(arr) {
-        if (arr.length === 0) {
-            throw new Error("Input array must not be empty.");
-        }
+    function GetResizedCanvas(sourceCanvas, targetSize) {
+        var canvas1 = sourceCanvas;
 
-        let maxIndex = 0;
-        let maxValue = arr[0];
+        while (1) {
+            if (canvas1.width > targetSize * 2) {
+                var canvas2 = document.createElement("canvas");
+                canvas2.width = canvas1.width * 0.5;
+                canvas2.height = canvas1.height * 0.5;
 
-        for (let i = 1; i < arr.length; i++) {
-            if (arr[i] > maxValue) {
-                maxValue = arr[i];
-                maxIndex = i;
+                var canvas2Context = canvas2.getContext("2d");
+                canvas2Context.drawImage(
+                    canvas1,
+                    0,
+                    0,
+                    canvas2.width,
+                    canvas2.height
+                );
+
+                canvas1 = canvas2;
+            } else {
+                var canvas2 = document.createElement("canvas");
+                canvas2.width = targetSize;
+                canvas2.height = targetSize;
+
+                var canvas2Context = canvas2.getContext("2d");
+                canvas2Context.drawImage(
+                    canvas1,
+                    0,
+                    0,
+                    canvas2.width,
+                    canvas2.height
+                );
+
+                return canvas2;
             }
         }
-
-        return {
-            index: maxIndex,
-            value: maxValue,
-        };
     }
-
-    function GetResizedCanvas (sourceCanvas, targetSize)
-{
-    var canvas1 = sourceCanvas;
-
-    while (1)
-    {
-        if (canvas1.width > targetSize * 2)
-        {
-            var canvas2 = document.createElement('canvas');
-            canvas2.width = canvas1.width * 0.5;
-            canvas2.height = canvas1.height * 0.5;
-
-            var canvas2Context = canvas2.getContext('2d');
-            canvas2Context.drawImage(canvas1, 0, 0, canvas2.width, canvas2.height); 
-
-            canvas1 = canvas2;
-        }
-        else
-        {
-            var canvas2 = document.createElement('canvas');
-            canvas2.width = targetSize;
-            canvas2.height = targetSize;
-
-            var canvas2Context = canvas2.getContext('2d');
-            canvas2Context.drawImage(canvas1, 0, 0, canvas2.width, canvas2.height); 
-
-            return canvas2;
-        }
-    }
-}
 
     // Prediction
     const predictDigit = () => {
-
         // Resized input
         const newCanvas = GetResizedCanvas(canvas, 28);
         var context1 = newCanvas.getContext("2d");
-        var imageData = context1.getImageData(0, 0, newCanvas.width, newCanvas.height);
+        var imageData = context1.getImageData(
+            0,
+            0,
+            newCanvas.width,
+            newCanvas.height
+        );
 
         // Intensity values
         var pixelValues = [];
         for (let i = 0; i < 3136; i += 4) {
             pixelValues.push(imageData.data[i + 3] / 255);
         }
-        
+
         // Output-1 -> o1 = relu(sum(x*w) + b)
         var op1 = new Array(128);
         for (let i = 0; i < 128; i++) {
@@ -202,12 +191,13 @@ const init = () => {
         }
         op3 = softmax(op3);
 
-        const val = findMaxValueAndIndex(op3);
-
         // Display the predictions
-        for(let i = 0; i < 10; i++) {
-            document.getElementsByClassName(`bar${i}`)[0].style.height = (op3[i]*100 > 1) ? `${op3[i]*100}%` : "3%";
-            document.getElementsByClassName(`bar${i}`)[0].title = `Prob: ${op3[i]}`;
+        for (let i = 0; i < 10; i++) {
+            document.getElementsByClassName(`bar${i}`)[0].style.height =
+                op3[i] * 100 > 1 ? `${op3[i] * 100}%` : "3%";
+            document.getElementsByClassName(
+                `bar${i}`
+            )[0].title = `Prob: ${op3[i]}`;
         }
     };
 
