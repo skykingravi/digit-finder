@@ -107,3 +107,14 @@ button:hover {
     bottom: -20px;
     color: #5EDB88;
 }
+@media screen and (max-width: 600px) {
+    body {
+        overflow-x: hidden;
+    }
+    button {
+        width: 224px;
+    }
+    .bars {
+        scale: .6;
+    }
+}

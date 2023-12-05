@@ -2,16 +2,24 @@ import { weight0, weight1, weight2 } from "./assets/weights.js";
 import { bias0, bias1, bias2 } from "./assets/biases.js";
 
 const init = () => {
+
+    var WIDTH = 40;
+
     // Text & Buttons
     const clearCanvasBtn = document.getElementById("clearCanvasBtn");
 
     // Get the canvas element and its context
     var canvas = document.getElementById("drawingCanvas");
+    if (window.innerWidth <= 600) {
+        canvas.width = 224;
+        canvas.height = 224;
+        WIDTH = 20;
+    }
     var context = canvas.getContext("2d", { willReadFrequently: true });
 
     // Set line properties
     context.lineCap = "round";
-    context.lineWidth = 40;
+    context.lineWidth = WIDTH;
     context.strokeStyle = "#5EDB88";
 
     // Variables to track drawing state
