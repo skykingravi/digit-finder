@@ -14,8 +14,10 @@ const init = () => {
         const newSize = window.getComputedStyle(
             document.getElementById("clearCanvasBtn")
         ).width;
-        canvas.width = newSize ? newSize.slice(0, -2) : window.innerWidth - 40;
-        canvas.height = newSize ? newSize.slice(0, -2) : window.innerWidth - 40;
+        canvas.width = newSize ? parseInt(newSize) - 4 : window.innerWidth - 38;
+        canvas.height = newSize
+            ? parseInt(newSize) - 4
+            : window.innerWidth - 38;
         WIDTH = 20;
     }
 
