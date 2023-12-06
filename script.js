@@ -10,11 +10,13 @@ const init = () => {
 
     // Get the canvas element and its context
     var canvas = document.getElementById("drawingCanvas");
-    if (window.innerWidth <= 600) {
-        canvas.width = 224;
-        canvas.height = 224;
+
+    if (window.innerWidth <= 460) {
+        canvas.width = window.innerWidth - 20;
+        canvas.height = window.innerWidth - 20;
         WIDTH = 20;
     }
+
     var context = canvas.getContext("2d", { willReadFrequently: true });
 
     // Set line properties
