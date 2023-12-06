@@ -232,6 +232,7 @@ const init = () => {
 
     let resizeTimeout;
     function handleResize() {
+        if (isTouchDevice) return;
         clearTimeout(resizeTimeout);
         resizeTimeout = setTimeout(reloadPage, 500);
     }
