@@ -2,7 +2,6 @@ import { weight0, weight1, weight2 } from "./assets/weights.js";
 import { bias0, bias1, bias2 } from "./assets/biases.js";
 
 const init = () => {
-
     var WIDTH = 40;
 
     // Text & Buttons
@@ -12,8 +11,11 @@ const init = () => {
     var canvas = document.getElementById("drawingCanvas");
 
     if (window.innerWidth <= 460) {
-        canvas.width = window.innerWidth - 20;
-        canvas.height = window.innerWidth - 20;
+        const newSize = window.getComputedStyle(
+            document.getElementById("clearCanvasBtn")
+        ).width;
+        canvas.width = newSize ? newSize.slice(0, -2) : window.innerWidth - 40;
+        canvas.height = newSize ? newSize.slice(0, -2) : window.innerWidth - 40;
         WIDTH = 20;
     }
 
@@ -221,6 +223,18 @@ const init = () => {
 
     // Interactions
     clearCanvasBtn.addEventListener("click", clearCanvas);
+
+    function reloadPage() {
+        location.reload();
+    }
+
+    let resizeTimeout;
+    function handleResize() {
+        clearTimeout(resizeTimeout);
+        resizeTimeout = setTimeout(reloadPage, 500);
+    }
+
+    window.addEventListener("resize", handleResize);
 };
 
 document.addEventListener("DOMContentLoaded", init);
