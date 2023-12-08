@@ -18,7 +18,7 @@ const init = () => {
         canvas.height = newSize
             ? parseInt(newSize) - 4
             : window.innerWidth - 38;
-        WIDTH = 20;
+        WIDTH = parseInt(newSize)/12;
     }
 
     var context = canvas.getContext("2d", { willReadFrequently: true });
