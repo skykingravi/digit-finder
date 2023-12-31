@@ -18,7 +18,7 @@ const init = () => {
         canvas.height = newSize
             ? parseInt(newSize) - 4
             : window.innerWidth - 38;
-        WIDTH = parseInt(newSize)/12;
+        WIDTH = parseInt(newSize) / 12;
     }
 
     var context = canvas.getContext("2d", { willReadFrequently: true });
@@ -143,6 +143,7 @@ const init = () => {
                 canvas1 = canvas2;
             } else {
                 var canvas2 = document.createElement("canvas");
+                canvas2.id = "resizedCanvas";
                 canvas2.width = targetSize;
                 canvas2.height = targetSize;
 
@@ -154,7 +155,7 @@ const init = () => {
                     canvas2.width,
                     canvas2.height
                 );
-
+                document.getElementById("resizedCanvas").replaceWith(canvas2);
                 return canvas2;
             }
         }
