@@ -2,7 +2,7 @@ import { weight0, weight1, weight2 } from "./assets/weights.js";
 import { bias0, bias1, bias2 } from "./assets/biases.js";
 
 const init = () => {
-    var WIDTH = 40;
+    var WIDTH = 15;
 
     // Text & Buttons
     const clearCanvasBtn = document.getElementById("clearCanvasBtn");
@@ -18,7 +18,7 @@ const init = () => {
         canvas.height = newSize
             ? parseInt(newSize) - 4
             : window.innerWidth - 38;
-        WIDTH = parseInt(newSize) / 12;
+        WIDTH = parseInt(newSize) / 30;
     }
 
     var context = canvas.getContext("2d", { willReadFrequently: true });
